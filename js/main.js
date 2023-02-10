@@ -1,101 +1,83 @@
-let nombreUsuario = prompt("Escribe un nombre de usuario:");
-let contraseniaUsuario = prompt("Escribe una contraseña:");
-let saldoInicial = parseFloat(prompt ("Ingresa tu saldo inicial:"));
-let saldoActual = saldoInicial;
-
-alert("Registro correcto, ingresa con tus credenciales");
-
-
-function validarUsuario(){
-    let usuarioIngresado = prompt("Ingresa tu usuario:");
-    while (usuarioIngresado != nombreUsuario){
-        alert("Usuario incorrecto, intenta nuevamente:");
-        usuarioIngresado = prompt("Ingresa tu usuario:");
-    };
-    return usuarioIngresado;
-}
-
-function validarContrasenia(){
-    let contraseniaIngresada = prompt("Ingresa tu contraseña:");
-    while (contraseniaIngresada != contraseniaUsuario){
-        contraseniaIngresada = prompt("Contraseña incorrecta, intenta de nuevo:");
+class Usuario {
+    constructor (nombre, email, contraseña, saldo) {
+        this.nombre = nombre
+        this.email = email
+        this.contraseña = contraseña
+        this.saldo = saldo
     }
-    return contraseniaIngresada;
-}
-
-function iniciarSesion(){
-    if (validarUsuario(),validarContrasenia()) {
-        return alert(`Bienvenido ${nombreUsuario}`);
+    
+    añadirSaldo (cantidad) {
+        this.saldo += cantidad
+        alert(`El nuevo saldo de ${this.nombre} es ${this.saldo}`)
     }
-}
-
-function mostrarSaldo(){
-    return alert(`Tu saldo actual es de ${saldoActual}`);
-}
-
-function agregarSaldo(){
-    abono = parseFloat(prompt("Ingresa la cantidad a abonar"));
-    saldoActual += confirmarCantidad(abono);
-    mostrarSaldo();
-    return saldoActual;
-}
-
-function retirarDinero(){
-    retiro = parseFloat(prompt("Ingresa la cantidad a retirar"));
-    saldoActual -= validarSaldo(retiro);
-    alert(`Retiro exitoso, tu nuevo saldo es de ${saldoActual}`);
-    return;
-}
-
-function modificarDatos(){
-    alert("Para modificar tus datos personales necesitamos validar tu identidad");
-    validarContrasenia();
-    nombreUsuario = prompt("Ingresa tu nuevo usuario:");
-    contraseniaUsuario = prompt("Ingresa tu nueva contraseña:");
-    alert(`Tu nuevo usuario es ${nombreUsuario} y tu contraseña es ${contraseniaUsuario}`)
-    return nombreUsuario, contraseniaUsuario;
-}
-
-function transferir(){
-    destinatario = prompt("Ingresa el correo electronico del destinatario:");
-    cantidad = parseFloat(prompt("Ingresa la cantidad a transferir"));
-    saldoActual -= validarSaldo(cantidad);
-    alert(`Transferencia enviada a ${destinatario} de manera exitosa, tu nuevo saldo es de ${saldoActual}`);
-    return;
-}
-
-function confirmarCantidad(cantidad){
-    if (prompt(`La cantidad ingresada es ${cantidad}, ¿Confirmar? s/n`) == "s"){
-        return cantidad;
+    retirar (cantidad) {
+        this.saldo -= cantidad
+        alert(`Tu nuevo saldo es ${this.saldo}`)
     }
-    else{
-        nuevaCantidad = parseInt(prompt("Ingresa la cantidad correcta"));
-        confirmarCantidad(nuevaCantidad);
-        return nuevaCantidad
+    transferir (cantidad,destinatario) {
+        this.retirar(cantidad);
+        destinatario.añadirSaldo(cantidad)
+    }
+
+}
+const usuario1 = new Usuario ("Emilio", "emilio@mail.com", "password123", 200)
+const usuario2 = new Usuario ("Romina", "romi@mail.com", "password123", 500)
+const usuario3 = new Usuario ("Mario", "mario@mail.com", "password123", 400)
+const usuario4 = new Usuario ("Fany", "fany@mail.com", "password123", 600)
+
+const usuarios = [usuario1, usuario2, usuario3, usuario4]
+
+function bienvenida (usuario){
+    alert(`Bienvenido ${usuario.nombre}, tu saldo es ${usuario.saldo}`)
+}
+function despedida (usuario){
+    alert(`Adiós ${usuario.nombre}`)
+}
+function menu (opcion) {
+    while (opcion != 4) {
+        switch(opcion){
+            case "1":
+            cantidad = parseFloat(prompt("¿Cuánto deseas añadir?:"))
+            usuario1.añadirSaldo(cantidad)
+            break;
+            case "2":
+            cantidad = parseFloat(prompt("¿Cuánto deseas retirar?:"))
+            usuario1.retirarSaldo(cantidad)
+            break;
+            case "3":
+            cantidad = parseFloat(prompt("¿Cuánto deseas transferir?:"))
+            destinatario = escogerDestinatario()
+            usuario1.transferir(cantidad, destinatario)
+            break;
+            default:
+            alert("Opción inválida")
+            break;
+        }
+        opcion=prompt("¿Qué deseas hacer? 1. Añadir saldo 2. Retirar 3. Transferir 4. Salir")
     }
 }
 
-function validarSaldo(dinero){
-    confirmarCantidad(dinero);
-    while (dinero > saldoActual){
-        dinero = parseFloat(prompt(`La cantidad excede tu saldo actual el cual es de ${saldoActual}, ingresa otra cantidad:`));
-        confirmarCantidad(dinero);
+bienvenida(usuario1)
+usuarios.forEach((usuario)=>{
+    console.log(usuario.nombre)
+})
+let opcion=prompt("¿Qué deseas hacer? 1. Añadir saldo 2. Retirar 3. Transferir 4. Salir")
+menu(opcion)
+despedida(usuario1)
+
+
+function escogerDestinatario() {
+    destinatario = prompt("Escribe el nombre del destinatario (Lista en la consola)")
+    switch(destinatario){
+        case "Romina":
+        return usuario2;
+        case "Mario":
+        return usuario3;
+        case "Fany":
+        return usuario4;
+        default:
+        alert("Opción inválida")
+        break;
     }
-    return dinero;
 }
-
-function cerrarSesion(){
-    alert("Hasta luego " + nombreUsuario)
-}
-
-
-iniciarSesion();
-mostrarSaldo();
-agregarSaldo();
-retirarDinero();
-modificarDatos();
-transferir();
-cerrarSesion()
-
-
 
