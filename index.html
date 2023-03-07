@@ -6,9 +6,96 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/styles.css">
     <title>MyWallet - Home</title>
+
+    <style>
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        table {
+            margin-top: 1rem;
+        }
+
+        table tr td,
+        table tr th {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 0.25rem;
+        }
+    </style>
+
+
 </head>
 <body>
+    <h1>Bienvenido a My Wallet</h1>
 
+    <section>
+        <span>Selecciona una opción: </span> <br><br>
+        <button type="menu"><a href="#agregarSaldo">Agregar saldo</a></button>
+        <button type="menu"><a href="#retirarSaldo">Retirar saldo</a></button>
+        <button type="menu"><a href="#agregarDestinatario">Agregar Destinatario</a></button>
+        <button type="menu"><a href="#transferir">Transferir</a></button>
+    </section>
+    
+    <h2 id="saldoActual">Tu saldo es de $0</h2>
+
+    <section>
+        <h2 id="agregarSaldo">Agregar saldo</h2>
+        <p>Ingresa la cantidad a agregar y haz clic en confirmar</p><br>
+        <form id="formularioAgregar">
+            <input type="text" id="montoAgregar" autocomplete="off" placeholder="Cantidad"/>
+            
+            <button type="submit">Confirmar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2 id="retirarSaldo">Retirar saldo</h2>
+        <p>Ingresa la cantidad a retirar y haz clic en confirmar</p><br>
+        <form id="formularioRetirar">
+            <input type="text" id="montoRetirar" autocomplete="off" placeholder="Cantidad"/>
+            
+            <button type="submit">Confirmar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2 id="agregarDestinatario">Agregar destinatario</h2>
+        <p>Ingresa el nombre y número de cuenta</p><br>
+        <form id="formularioDestinatarios">
+            <input type="text" id="nombreDestinatario" autocomplete="off" placeholder="Nombre"/>
+            <input type="text" id="cuentaDestinatario" autocomplete="off" placeholder="# de cuenta a 10 dígitos"/>
+            
+            <button type="submit">Confirmar</button>
+        </form>
+    </section>
+
+    <section>
+        <h2 id="transferir">Transferir</h2>
+        <p>Ingresa el nombre del destinatario y el montro a transferir</p><br>
+        <form id="formularioTransferir">
+            <input type="text" id="destinatarioTransferir" autocomplete="off" placeholder="Nombre"/>
+            <input type="text" id="montoTransferir" autocomplete="off" placeholder="Monto a transferir"/>
+            
+            <button type="submit">Confirmar</button>
+        </form>
+
+        <table id="destinatarios">
+            <thread>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Número de cuenta</th>
+                    <th>Saldo</th>
+                </tr>
+            </thread>
+
+            <tbody id="bodyTabla">
+
+            </tbody>
+
+        </table>
+    </section>
 
     <script src="js/main.js"></script>
 </body>
